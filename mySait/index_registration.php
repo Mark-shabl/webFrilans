@@ -1,4 +1,4 @@
-
+<?php session_start();?>
 
 <!DOCTYPE html>
 <html lang="ru" data-bs-theme="dark">
@@ -59,13 +59,23 @@
               <div class="mb-3">
                 <br>
                 <input type="email" class="form-control" required name="email" placeholder="Электронная почта" id="exampleInputEmail1" aria-describedby="emailHelp"> 
-
-
+                  <?php if(isset($_SESSION['errorEmail'])):?>
+                    <div class="alert alert-danger" role="alert">
+                    Этот адрес электронной почты уже используется! <a href="#" class="alert-link">НАЖМИТЕ</a>. Что бы вастонановть пароль.
+                    </div>
+                    <?php unset($_SESSION['errorEmail']);?>
+                  <?php endif;?>
               </div>
               <div class="row">
                 <div class="mb-3">
                   <input type="text" class="form-control" required name='login' placeholder="Логин" aria-label="First name">
                 </div>
+                  <?php if(isset($_SESSION['errorLogin'])):?>
+                    <div class="alert alert-danger" role="alert">
+                    Этот логин уже используется!
+                    </div>
+                    <?php unset($_SESSION['errorLogin']);?>
+                  <?php endif;?>
               </div>
               <div class="row">
                 <div class="col">

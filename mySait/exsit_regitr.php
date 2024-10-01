@@ -47,22 +47,21 @@
       </nav>
 </head>
 	<bode>
-		<form method="get">
+		<form method="post">
 			<input type="email" class="form-control" name="email" placeholder="Электронная почта" id="exampleInputEmail1" aria-describedby="emailHelp">
 			<button type="submit" name='puh' class="btn btn-primary">Зарегистрироваться</button>
 		</form>	
 <?php
-if (isset($_GET['puh'])) {
-	$emailform=$_GET['email'];
-	require_once "include/db.php"; 
-	$email = '"' .$mysqli->real_escape_string($emailform).'"';
-	$query = "INSERT INTO FrilansPipl (email) VALUES ($email)";
-	$result=$mysqli->query($query);
-	if($result){ 
-		print('Успех!!!'.'<br>');
-	}
-	$mysqli->close;
+$emailform=$_POST['email'];
+ require_once "include/db.php";
+
+ if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+  exit('Invalid email address'); // Use your own error handling ;)
 }
+$select = mysqli_query( $mysqli, "SELECT email FROM testEmail WHERE email = '".$_POST['email']."'") or exit(mysqli_error( $mysqli));
+ if(mysqli_num_rows($select)) {
+     exit('This email is already being used');
+ }
 ?>	
 	</body>
 </html>
